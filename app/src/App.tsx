@@ -10,7 +10,7 @@ function App() {
             <TooltipProvider>
                 <AppBar />
                 <ProjectEditor />
-                <Announcement />
+                {/* <Announcement /> */}
                 <Toaster />
             </TooltipProvider>
         </ThemeProvider>

@@ -23,6 +23,11 @@ interface BrowserControlsProps {
     onlookEnabled: boolean;
 }
 
+/**
+ * 模拟的浏览器url输入栏
+ * @param param0 
+ * @returns 
+ */
 function BrowserControls({
     webviewRef,
     webviewSrc,
@@ -93,15 +98,19 @@ function BrowserControls({
             onMouseOver={() => setHovered(true)}
             onMouseOut={() => setHovered(false)}
         >
+            {/* //上一步 */}
             <Button variant="outline" className="bg-transparent" onClick={goBack}>
                 <ArrowLeftIcon />
             </Button>
+            {/* //下一步 */}
             <Button variant="outline" className="bg-transparent" onClick={goForward}>
                 <ArrowRightIcon />
             </Button>
+            {/* //刷新 */}
             <Button variant="outline" className="bg-transparent" onClick={reload}>
                 <ReloadIcon />
             </Button>
+            {/* //url框 */}
             <Input
                 className="text-large"
                 value={webviewSrc}

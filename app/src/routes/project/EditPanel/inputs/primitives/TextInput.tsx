@@ -6,6 +6,9 @@ import { useEditorEngine } from '@/routes/project';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 
+/**
+ *  工具栏里的 input输入框 ，作用于 margin，padding等
+ */
 const TextInput = observer(
     ({
         elementStyle,
@@ -15,7 +18,7 @@ const TextInput = observer(
         onValueChange?: (key: string, value: string) => void;
     }) => {
         const editorEngine = useEditorEngine();
-        const [localValue, setLocalValue] = useState(elementStyle.value);
+        const [localValue, setLocalValue] = useState(elementStyle.value); //当前页面映射的数据，该state只作用于当前组件的视图
         const constructChange = constructChangeCurried(elementStyle.value);
 
         useEffect(() => {
@@ -46,6 +49,7 @@ const TextInput = observer(
 
         const sendStyleUpdate = (newValue: string) => {
             setLocalValue(newValue);
+            console.log(editorEngine,"editorEngineeditorEngine")
             editorEngine.style.updateElementStyle(
                 elementStyle.key,
                 constructChange(appendCssUnit(newValue)),
@@ -69,9 +73,12 @@ const TextInput = observer(
                 step = 10;
             }
 
+            //监听上下按钮，进行数值的增减
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
+                console.log(localValue,"localValue")
                 const [parsedNumber, parsedUnit] = stringToParsedValue(localValue);
+                console.log(parsedNumber,parsedUnit,"parsedUnitparsedUnit")
                 const newNumber = (parsedNumber + (e.key === 'ArrowUp' ? step : -step)).toString();
                 const newValue = parsedValueToString(newNumber, parsedUnit);
                 sendStyleUpdate(newValue);

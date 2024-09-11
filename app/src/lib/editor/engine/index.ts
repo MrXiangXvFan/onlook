@@ -99,6 +99,7 @@ export class EditorEngine {
         this.elements.clear();
     }
 
+    //工具栏操作以后 webview视口样式更新
     handleStyleUpdated(webview: Electron.WebviewTag) {
         if (!this.history.isInTransaction) {
             this.elements.refreshSelectedElements(webview);

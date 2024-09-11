@@ -74,10 +74,14 @@ const NestedInputs = observer(({ elementStyles: styles }: { elementStyles: Eleme
             >
                 <p className="text-xs text-left text-text">{elementStyle.displayName}</p>
                 <div className="ml-auto h-8 flex flex-row w-32 space-x-1">
+                    {/* //这一块是 margin，padding工具栏里需要进行 四边单独统一的工具区域 */}
+                    {/* 案例：输入 1px === El4边 * 1px */}
                     <TextInput
                         elementStyle={showGroup ? { ...elementStyle, value: '' } : elementStyle}
                         onValueChange={onTopValueChanged}
                     />
+                    {/* //这一块是 margin，padding工具栏里需要进行 四边单独设置的工具区域 */}
+                    {/* 案例：输入 1px 1px 1px  1px === El4边 * 1px */}
                     <ToggleGroup
                         size="sm"
                         type="single"

@@ -9,20 +9,27 @@ import EditorTopBar from './TopBar';
 import WebviewArea from './WebviewArea';
 
 const EditorEngineContext = createContext(new EditorEngine());
-export const useEditorEngine = () => useContext(EditorEngineContext);
+
+//useContent来控制页面的解析和视图更新
+//案例：选中视图：工具栏的padding +1 ,中间浏览器是否里的dom可以同步更新，就是通过这个来进行数据传递的
+export const useEditorEngine = () => useContext(EditorEngineContext); 
 
 function ProjectEditor() {
     return (
         <EditorEngineContext.Provider value={useEditorEngine()}>
             <div className="relative flex flex-row h-[calc(100vh-2.5rem)] select-none">
+
+                {/* //中间，浏览器预览 */}
                 <Canvas>
                     <WebviewArea />
                 </Canvas>
+                {/* //左侧树级结构 todo */}
                 <ResizablePanel>
                     <div className="left-0 animate-layer-panel-in">
                         <LayersPanel />
                     </div>
                 </ResizablePanel>
+                {/* //左侧编辑器 todo */}
                 <div className="fixed right-0 top-20 animate-edit-panel-in">
                     <EditPanel />
                 </div>

@@ -4,9 +4,13 @@ import { AstManager } from '../ast';
 import { OverlayManager } from '../overlay';
 import { DomElement, WebViewElement } from '/common/models/element';
 
+/**
+ * 节点选中以后，状态更行等都在这里处理
+ *  核心组件
+ */
 export class ElementManager {
-    private hoveredElement: WebViewElement | undefined;
-    private selectedElements: WebViewElement[] = [];
+    private hoveredElement: WebViewElement | undefined; //当前hover的元素
+    private selectedElements: WebViewElement[] = []; //当前选中的元素
 
     constructor(
         private overlay: OverlayManager,
@@ -63,11 +67,13 @@ export class ElementManager {
         }
     }
 
+    //更新选中的视图
     refreshSelectedElements(webview: Electron.WebviewTag) {
         this.debouncedRefreshClickedElements(webview);
     }
 
     setHoveredElement(element: WebViewElement) {
+        // console.log(element,"hoveredElementhoveredElement")
         this.hoveredElement = element;
     }
 
@@ -94,6 +100,7 @@ export class ElementManager {
         this.selectedElements = [];
     }
 
+    // 更新选中的节点
     private async undebouncedRefreshClickedElements(webview: Electron.WebviewTag) {
         const clickedElements = this.selected;
         const newClickedRects: {
@@ -102,6 +109,7 @@ export class ElementManager {
             isComponent?: boolean;
         }[] = [];
 
+        console.log(clickedElements, 'clickedElementsclickedElements');
         for (const element of clickedElements) {
             const rect = await this.overlay.getBoundingRect(element.selector, webview);
             const computedStyle = await this.overlay.getComputedStyle(element.selector, webview);

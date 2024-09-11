@@ -34,6 +34,7 @@ const ManualTab = observer(() => {
         }
     }
 
+    //获取不同类型的表单项（输入框）
     function getNestedInput(elementStyles: ElementStyle[], subGroupKey: ElementStyleSubGroup) {
         if (
             [
@@ -63,9 +64,11 @@ const ManualTab = observer(() => {
         return Object.entries(groupedStyles).map(([groupKey, subGroup]) => (
             <AccordionItem key={groupKey} value={groupKey}>
                 <AccordionTrigger>
+                    {/* 工具栏标题  todo*/}
                     <h2 className="text-xs font-semibold">{groupKey}</h2>
                 </AccordionTrigger>
                 <AccordionContent>
+                    {/* 工具栏 输入区域  todo*/}
                     {groupKey === 'Text' && (
                         <TagDetails tagName={editorEngine.elements.selected[0].tagName} />
                     )}

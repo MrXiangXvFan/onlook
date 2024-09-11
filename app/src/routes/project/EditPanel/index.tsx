@@ -51,6 +51,7 @@ const EditPanel = observer(() => {
                 </TabsList>
                 <Separator className="mt-1" />
                 <div className="h-[calc(100vh-7.75rem)] overflow-auto">
+                    {/* 这里是 工具栏区域 */}
                     <TabsContent value={TabValue.MANUAL}>
                         {editorEngine.elements.selected.length > 0 ? (
                             <ManualTab />
