@@ -156,6 +156,7 @@ export class CodeManager {
     }
 
     private async getTemplateNodeForSelector(selector: string): Promise<TemplateNode | undefined> {
+        console.log("是这里")
         return (
             (await this.astManager.getInstance(selector)) ??
             (await this.astManager.getRoot(selector))

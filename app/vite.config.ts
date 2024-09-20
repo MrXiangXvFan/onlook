@@ -51,7 +51,7 @@ export default defineConfig(({ command }) => {
                 preload: {
                     input: {
                         index: 'electron/preload/browserview/index.ts',
-                        webview: 'electron/preload/webview/index.ts',
+                        webview: 'electron/preload/webview/index.ts', //加载需要在webview中使用 api
                     },
                     vite: {
                         build: {

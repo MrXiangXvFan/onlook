@@ -27,6 +27,11 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
+/**
+ * next项目的layout组件
+ * @param param0
+ * @returns
+ */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>

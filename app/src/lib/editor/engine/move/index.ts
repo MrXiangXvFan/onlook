@@ -6,6 +6,9 @@ import { MoveElementAction } from '/common/actions';
 import { escapeSelector } from '/common/helpers';
 import { DomElement, ElementPosition } from '/common/models/element';
 
+/**
+ * webview模拟视口移动事件相关控制类
+ */
 export class MoveManager {
     dragOrigin: ElementPosition | undefined;
     originalIndex: number | undefined;
@@ -42,11 +45,17 @@ export class MoveManager {
             return;
         }
 
-        const { x, y } = getRelativeMousePositionToWebview(e);
-        const dx = x - this.dragOrigin.x;
-        const dy = y - this.dragOrigin.y;
+        console.log(e, 'e11111');
+        const res = getRelativeMousePositionToWebview(e);
+        console.log(res, 'e2222');
+        const { x, y } = res; //这个xy是webview整个app来说的位置信息
+        const dx = x - this.dragOrigin.x; //this.dragOrigin.x;当前元素的位置信息 x
+        const dy = y - this.dragOrigin.y; //this.dragOrigin.y；当前元素的位置信息 y
+        // console.log(this.dragOrigin.x, 'dragOrigin.x');
+        // console.log(this.dragOrigin.y, 'dragOrigin.y');
 
         if (Math.max(Math.abs(dx), Math.abs(dy)) > this.MIN_DRAG_DISTANCE) {
+            console.log('进来了吗');
             this.overlay.clear();
             webview.executeJavaScript(`window.api?.drag(${dx}, ${dy}, ${x}, ${y})`);
         }

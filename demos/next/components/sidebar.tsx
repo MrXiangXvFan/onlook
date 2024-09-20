@@ -1,7 +1,24 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
-import { HomeIcon, PackageIcon, SettingsIcon, ShoppingCartIcon, UsersIcon } from "./shared"
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+import {
+  HomeIcon,
+  PackageIcon,
+  SettingsIcon,
+  ShoppingCartIcon,
+  UsersIcon,
+} from "./shared"
+
+/**
+ * next项目的侧边栏
+ * @returns
+ */
 export function Sidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
@@ -17,7 +34,7 @@ export function Sidebar() {
                 <span className="sr-only">Dashboard</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Dashboard</TooltipContent>
+            <TooltipContent side="right">1111</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -55,7 +72,6 @@ export function Sidebar() {
             </TooltipTrigger>
             <TooltipContent side="right">Customers</TooltipContent>
           </Tooltip>
-
         </TooltipProvider>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">

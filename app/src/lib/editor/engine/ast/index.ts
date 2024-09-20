@@ -8,6 +8,9 @@ import { TemplateNode } from '/common/models/element/templateNode';
 
 const IGNORE_TAGS = ['SCRIPT', 'STYLE'];
 
+/**
+ * 左侧 DOM 节点 ATS语法解析类
+ */
 export class AstManager {
     private doc: Document | undefined;
     private layersMap: Map<string, LayerNode> = new Map();
@@ -18,7 +21,12 @@ export class AstManager {
         makeAutoObservable(this);
     }
 
+    /**
+     * 更新layers。到这一步只负责一个更新，数据已经在前面处理完毕
+     * @param layers
+     */
     updateLayers(layers: LayerNode[]) {
+        console.log('update tree', layers);
         runInAction(() => {
             this.layers = layers;
         });
@@ -57,20 +65,25 @@ export class AstManager {
     }
 
     getInstanceSync(selector: string): TemplateNode | undefined {
+        console.log('getInstanceSync', selector);
         return this.templateNodeMap.getInstance(selector);
     }
 
     async getInstance(selector: string): Promise<TemplateNode | undefined> {
+        console.log('getInstance', selector);
         await this.checkForNode(selector);
         return this.templateNodeMap.getInstance(selector);
     }
 
     async getRoot(selector: string): Promise<TemplateNode | undefined> {
+        console.log('getRoot',selector);
         await this.checkForNode(selector);
         return this.templateNodeMap.getRoot(selector);
     }
 
     async checkForNode(selector: string) {
+        console.log('节点更新的时候触发');
+        console.log(this.templateNodeMap, 'templateNodeMaptemplateNodeMap');
         if (this.templateNodeMap.isProcessed(selector)) {
             return;
         }
@@ -85,11 +98,18 @@ export class AstManager {
         this.doc = doc;
     }
 
+    /**
+     * 初始化 AST
+     * 比如:
+     * @param rootElement
+     */
     async setMapRoot(rootElement: Element) {
+        console.log('设置节点');
         this.clear();
         this.setDoc(rootElement.ownerDocument);
         const res = await this.processNode(rootElement as HTMLElement);
         if (res && res.layerNode) {
+            console.log('有layerNode吗');
             this.updateLayers([res.layerNode]);
         }
     }
@@ -246,6 +266,10 @@ export class AstManager {
         };
     }
 
+    /**
+     * 清理所有layers相关内容
+     * 类似于 初始化操作
+     */
     clear() {
         this.templateNodeMap = new AstMap();
         this.layers = [];

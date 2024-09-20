@@ -10,7 +10,7 @@ import { DomElement, WebViewElement } from '/common/models/element';
  */
 export class ElementManager {
     private hoveredElement: WebViewElement | undefined; //当前hover的元素
-    private selectedElements: WebViewElement[] = []; //当前选中的元素
+    private selectedElements: WebViewElement[] = []; //当前选中的元素 []
 
     constructor(
         private overlay: OverlayManager,
@@ -27,6 +27,12 @@ export class ElementManager {
         return this.selectedElements;
     }
 
+    /**
+     * 
+     * @param domEl 当前光标所在位置的元素
+     * @param webview  当前webview整个视图
+     * @returns 
+     */
     mouseover(domEl: DomElement, webview: Electron.WebviewTag) {
         if (!domEl) {
             this.overlay.removeHoverRect();
@@ -43,13 +49,16 @@ export class ElementManager {
         };
         const adjustedRect = this.overlay.adaptRectFromSourceElement(webviewEl.rect, webview);
         const isComponent = this.ast.getInstanceSync(domEl.selector) !== undefined;
+        //更新框框
         this.overlay.updateHoverRect(adjustedRect, isComponent);
         this.setHoveredElement(webviewEl);
     }
 
+    //节点被点击之后
     click(domEls: DomElement[], webview: Electron.WebviewTag) {
-        this.overlay.removeClickedRects();
-        this.clearSelectedElements();
+       
+        this.overlay.removeClickedRects();  //擦除上一个元素信息框  --ui层擦除
+        this.clearSelectedElements(); //清理上一个选择的元素信息   --javaScript层信息清理
 
         const webviewEls: WebViewElement[] = domEls.map((el) => {
             const webviewElement: WebViewElement = {
@@ -62,6 +71,7 @@ export class ElementManager {
         for (const webviewEl of webviewEls) {
             const adjustedRect = this.overlay.adaptRectFromSourceElement(webviewEl.rect, webview);
             const isComponent = this.ast.getInstanceSync(webviewEl.selector) !== undefined;
+            console.log(isComponent,"isComponentisComponent")
             this.overlay.addClickRect(adjustedRect, webviewEl.styles, isComponent);
             this.addSelectedElement(webviewEl);
         }
@@ -81,7 +91,13 @@ export class ElementManager {
         this.hoveredElement = undefined;
     }
 
+    /**
+     * 往dom树里面新增当前选中的节点
+     * @param element 
+     */
     addSelectedElement(element: WebViewElement) {
+        console.log(this.selectedElements ,"selectedElementsselectedElements111")
+        console.log(element ,"selectedElementsselectedElements222")
         this.selectedElements.push(element);
     }
 
@@ -100,7 +116,6 @@ export class ElementManager {
         this.selectedElements = [];
     }
 
-    // 更新选中的节点
     private async undebouncedRefreshClickedElements(webview: Electron.WebviewTag) {
         const clickedElements = this.selected;
         const newClickedRects: {

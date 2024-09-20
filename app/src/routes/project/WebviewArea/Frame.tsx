@@ -24,7 +24,6 @@ const Frame = observer(
         const editorEngine = useEditorEngine();
         const webviewRef = useRef<Electron.WebviewTag>(null);
 
-        console.log(settings, 'settingssettingssettings');
         const [selected, setSelected] = useState<boolean>(false);
         const [focused, setFocused] = useState<boolean>(false);
         const [hovered, setHovered] = useState<boolean>(false);
@@ -122,6 +121,7 @@ const Frame = observer(
         }
 
         function handleWebviewFocus() {
+            console.log("点击了")
             setFocused(true);
         }
 
@@ -161,6 +161,7 @@ const Frame = observer(
                                   : 'outline-transparent',
                         )}
                         src={settings.url}
+                        // src={'http://localhost:8080/'}
                         preload={`file://${window.env.WEBVIEW_PRELOAD_PATH}`}
                         allowpopups={'true' as any}
                         style={{
@@ -168,6 +169,7 @@ const Frame = observer(
                             height: webviewSize.height,
                         }}
                     ></webview>
+                    {/* //这个才是映射到当前electron项目中的视图，可以监测点击的那个视图 --重要 */}
                     <GestureScreen webviewRef={webviewRef} setHovered={setHovered} />
                     {/* //未监测到视口项目启动时的提示视图 */}
                     {domFailed && (

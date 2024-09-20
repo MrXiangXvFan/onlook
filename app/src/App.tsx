@@ -8,8 +8,11 @@ function App() {
     return (
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <TooltipProvider>
+                {/* //electron最头部 */}
                 <AppBar />
+                {/* //核心视口（dom结构+webview+操作栏） */}
                 <ProjectEditor />
+                {/* //最新消息提示Modal */}
                 {/* <Announcement /> */}
                 <Toaster />
             </TooltipProvider>

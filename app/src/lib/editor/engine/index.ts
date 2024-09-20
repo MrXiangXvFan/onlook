@@ -72,6 +72,8 @@ export class EditorEngine {
     get insert() {
         return this.insertManager;
     }
+
+    //获取webview移动事件相关类
     get move() {
         return this.moveManager;
     }

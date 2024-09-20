@@ -20,7 +20,15 @@ export const getElements = (selector: string, style: boolean): DomElement[] => {
     return [getDomElement(el as HTMLElement, style), ...elsMetadata];
 };
 
+/**
+ * 获取当前节点信息，具体信息参考 DomElement 类型
+ * @param x 
+ * @param y 
+ * @param getStyle 
+ * @returns 
+ */
 export const getElementAtLoc = (x: number, y: number, getStyle: boolean): DomElement => {
+    console.log('走到这里来了');
     const el = getDeepElement(x, y) || document.body;
     return getDomElement(el as HTMLElement, getStyle);
 };
@@ -44,8 +52,12 @@ const getRelatedElements = (el: HTMLElement): HTMLElement[] => {
     return Array.from(els) as HTMLElement[];
 };
 
+//获取webview的节点位置信息
 const getDeepElement = (x: number, y: number): Element | undefined => {
+    console.log(x, y,"x, y");
+    //获取webview里当前光标位置(x,y)最上层的元素
     const el = document.elementFromPoint(x, y);
+    console.log(el,"documentdocument")
     if (!el) {
         return;
     }

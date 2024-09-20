@@ -7,6 +7,9 @@ import TreeNode from './Tree/TreeNode';
 import TreeRow from './Tree/TreeRow';
 import { LayerNode } from '/common/models/element/layers';
 
+/**
+ *  左侧dom --- 树级结构主体组件
+ */
 const LayersTab = observer(() => {
     const treeRef = useRef<TreeApi<LayerNode>>();
     const editorEngine = useEditorEngine();
@@ -35,11 +38,14 @@ const LayersTab = observer(() => {
             onMouseOver={() => setTreeHovered(true)}
             onMouseLeave={() => handleMouseLeaveTree()}
         >
+            {
+                console.log(domTree,"domTreedomTree")
+            }
             <RightClickMenu>
                 <Tree
                     ref={treeRef}
                     data={domTree}
-                    openByDefault={true}
+                    openByDefault={true} 
                     overscanCount={1}
                     indent={8}
                     padding={0}

@@ -1,3 +1,6 @@
+import React, { Fragment } from "react"
+import Link from "next/link"
+
 import { Badge } from "@/components/ui/badge"
 import {
   Breadcrumb,
@@ -43,8 +46,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Link from "next/link"
-import React, { Fragment } from "react"
+
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -64,6 +66,12 @@ import {
   UsersIcon,
 } from "./shared"
 import { Sidebar } from "./sidebar"
+
+/**
+ * next项目的主视图
+ * 项目跑起来之后，可以改动的那个页面，就是这个文件了。
+ * @returns
+ */
 export function Dashboard() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">

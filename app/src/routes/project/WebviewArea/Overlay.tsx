@@ -19,7 +19,11 @@ const Overlay = observer(({ children }: { children: React.ReactNode }) => {
 
     return (
         <>
+            {/* //webview元素 */}
             {children}
+            {/* 重要 */}
+            {/* 这个是点击webview元素之后，在视口区域出现的该元素的边框和元素信息等 */}
+            {/* 和webview本身是分开的 */}
             <div
                 ref={overlayContainerRef}
                 style={{

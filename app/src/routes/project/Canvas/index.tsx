@@ -5,6 +5,9 @@ import { useEditorEngine } from '..';
 import HotkeysArea from './HotkeysArea';
 import PanOverlay from './PanOverlay';
 
+/**
+ * 对webview进行比例缩放。
+ */
 const Canvas = observer(({ children }: { children: ReactNode }) => {
     const ZOOM_SENSITIVITY = 0.006;
     const PAN_SENSITIVITY = 0.52;
@@ -12,7 +15,7 @@ const Canvas = observer(({ children }: { children: ReactNode }) => {
     const editorEngine = useEditorEngine();
     const containerRef = useRef<HTMLDivElement>(null);
     const [isPanning, setIsPanning] = useState(false);
-    const [scale, setScale] = useState(editorEngine.canvas.scale);
+    const [scale, setScale] = useState(editorEngine.canvas.scale); //视口缩放比例
     const [position, setPosition] = useState(editorEngine.canvas.position);
 
     useEffect(() => {
@@ -42,6 +45,7 @@ const Canvas = observer(({ children }: { children: ReactNode }) => {
         const deltaX = (x - position.x) * zoomFactor;
         const deltaY = (y - position.y) * zoomFactor;
 
+        console.log(newScale,"newScalenewScale")
         setScale(newScale);
         setPosition((prevPosition) => ({
             x: prevPosition.x - deltaX,
@@ -59,9 +63,11 @@ const Canvas = observer(({ children }: { children: ReactNode }) => {
     };
 
     const handleCanvasClicked = (event: React.MouseEvent<HTMLDivElement>) => {
+        console.log("点击11111222")
         if (event.target !== containerRef.current) {
             return;
         }
+        console.log("点击11111")
         editorEngine.webviews.deselectAll();
         editorEngine.webviews.notify();
         editorEngine.clear();
