@@ -28,10 +28,10 @@ export class ElementManager {
     }
 
     /**
-     * 
+     *
      * @param domEl 当前光标所在位置的元素
      * @param webview  当前webview整个视图
-     * @returns 
+     * @returns
      */
     mouseover(domEl: DomElement, webview: Electron.WebviewTag) {
         if (!domEl) {
@@ -56,8 +56,7 @@ export class ElementManager {
 
     //节点被点击之后
     click(domEls: DomElement[], webview: Electron.WebviewTag) {
-       
-        this.overlay.removeClickedRects();  //擦除上一个元素信息框  --ui层擦除
+        this.overlay.removeClickedRects(); //擦除上一个元素信息框  --ui层擦除
         this.clearSelectedElements(); //清理上一个选择的元素信息   --javaScript层信息清理
 
         const webviewEls: WebViewElement[] = domEls.map((el) => {
@@ -71,7 +70,7 @@ export class ElementManager {
         for (const webviewEl of webviewEls) {
             const adjustedRect = this.overlay.adaptRectFromSourceElement(webviewEl.rect, webview);
             const isComponent = this.ast.getInstanceSync(webviewEl.selector) !== undefined;
-            console.log(isComponent,"isComponentisComponent")
+            console.log(isComponent, 'isComponentisComponent');
             this.overlay.addClickRect(adjustedRect, webviewEl.styles, isComponent);
             this.addSelectedElement(webviewEl);
         }
@@ -93,11 +92,11 @@ export class ElementManager {
 
     /**
      * 往dom树里面新增当前选中的节点
-     * @param element 
+     * @param element
      */
     addSelectedElement(element: WebViewElement) {
-        console.log(this.selectedElements ,"selectedElementsselectedElements111")
-        console.log(element ,"selectedElementsselectedElements222")
+        console.log(this.selectedElements, 'selectedElementsselectedElements111');
+        console.log(element, 'selectedElementsselectedElements222');
         this.selectedElements.push(element);
     }
 

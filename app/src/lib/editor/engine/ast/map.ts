@@ -5,6 +5,7 @@ export class AstMap {
     selectorToInstance: Map<string, TemplateNode> = new Map();
     selectorToRoot: Map<string, TemplateNode> = new Map();
 
+    //左侧节点树是否已经存在当前点击的节点信息
     isProcessed(selector: string): boolean {
         return this.selectorToInstance.has(selector) || this.selectorToRoot.has(selector);
     }
@@ -23,6 +24,8 @@ export class AstMap {
     }
 
     getRoot(selector: string): TemplateNode | undefined {
+        console.log(this.selectorToRoot.get(selector), 'this.selectorToRoot.get(selector)');
+        console.log(this.selectorToRoot, 'this.selectorToRoot.get(selector)1111');
         return this.selectorToRoot.get(selector);
     }
 
@@ -35,6 +38,7 @@ export class AstMap {
     }
 
     setRoot(selector: string, templateNode: TemplateNode) {
+        console.log(templateNode, 'templateNodeselector', selector);
         this.selectorToRoot.set(selector, templateNode);
         this.setSelector(templateNode, selector);
     }

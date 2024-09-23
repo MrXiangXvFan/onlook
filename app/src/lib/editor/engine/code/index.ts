@@ -26,27 +26,60 @@ export class CodeManager {
 
     async generateCodeDiffs(): Promise<CodeDiff[]> {
         const webviews = [...this.webviewManager.getAll().values()];
+        console.log(webviews, 'webviewswebviews');
         if (webviews.length === 0) {
             console.error('No webviews found.');
             return [];
         }
         const webview = webviews[0];
 
+        //获取所有被tailwindcss有所更改的节点，不论层级，一维对象数组排开
         const tailwindResults = await this.getTailwindClasses(webview);
+        console.log(tailwindResults, 'tailwindResultstailwindResults');
+        //未知。没看
         const insertedEls = await this.getInsertedElements(webview);
+        //获取所有位置被更改的节点
+        //结构如下
+        // [
+        //     {
+        //         "type": "move-element",
+        //         "selector": "[data-onlook-unique-id=\"b5e5dbe0-3de9-4818-931c-856df684162b\"]",
+        //         "timestamp": 1726993494269,
+        //         "location": {
+        //             "targetSelector": "[data-onlook-unique-id=\"32824a9a-b06b-4951-9d8c-e949add35144\"]",
+        //             "position": "index",
+        //             "index": 1
+        //         }
+        //     },
+        //     {
+        //         "type": "move-element",
+        //         "selector": "[data-onlook-unique-id=\"807fdaa9-f658-4bb8-b53a-b5627da65adb\"]",
+        //         "timestamp": 1726993495594,
+        //         "location": {
+        //             "targetSelector": "[data-onlook-unique-id=\"e36cd5e4-6777-4f3e-b5a2-9c2b363053f6\"]",
+        //             "position": "index",
+        //             "index": 0
+        //         }
+        //     }
+        // ]
         const movedEls = await this.getMovedElements(webview);
-
+        console.log(movedEls, 'movedEls');
         const codeDiffRequest = await this.getCodeDiffRequests(
             tailwindResults,
             insertedEls,
             movedEls,
         );
+        console.log(codeDiffRequest, 'codeDiffRequestcodeDiffRequest');
         const codeDiffs = await this.getCodeDiff(codeDiffRequest);
+        console.log(codeDiffs, 'codeDiffscodeDiffs');
+        // codeDiffs.generated 里存储新的DOM节点信息
+        // codeDiffs.original 里存储旧的DOM节点信息
         return codeDiffs;
     }
 
     private async getTailwindClasses(webview: WebviewTag) {
         const stylesheet = await this.getStylesheet(webview);
+        console.log(stylesheet, 'stylesheetstylesheetstylesheet');
         if (!stylesheet) {
             console.log('No stylesheet found in the webview.');
             return [];
@@ -88,8 +121,10 @@ export class CodeManager {
         tailwindResults: ResultCode[],
         templateToCodeChange: Map<TemplateNode, CodeDiffRequest>,
     ): Promise<void> {
+        console.log(tailwindResults, 'tailwindResultstailwindResults');
         for (const twResult of tailwindResults) {
             const templateNode = await this.getTemplateNodeForSelector(twResult.selectorName);
+            console.log(templateNode, 'templateNodetemplateNode');
             if (!templateNode) {
                 continue;
             }
@@ -156,7 +191,7 @@ export class CodeManager {
     }
 
     private async getTemplateNodeForSelector(selector: string): Promise<TemplateNode | undefined> {
-        console.log("是这里")
+        console.log('是这里');
         return (
             (await this.astManager.getInstance(selector)) ??
             (await this.astManager.getRoot(selector))
@@ -206,6 +241,12 @@ export class CodeManager {
     }
 
     private async getStylesheet(webview: Electron.WebviewTag) {
+        console.log(
+            await webview.executeJavaScript(
+                `document.getElementById('${EditorAttributes.ONLOOK_STYLESHEET_ID}')`,
+            ),
+            'getStylesheetgetStylesheet',
+        );
         return await webview.executeJavaScript(
             `document.getElementById('${EditorAttributes.ONLOOK_STYLESHEET_ID}')?.textContent`,
         );

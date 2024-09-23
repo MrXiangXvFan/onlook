@@ -75,6 +75,7 @@ const GestureScreen = observer(({ webviewRef, setHovered }: GestureScreenProps) 
         //获取当前元素的为hi信息
         //参考：https://developer.baidu.com/article/details/3294938
         const rect = webview.getBoundingClientRect();
+        console.log(rect, 'rectrect');
         const { x, y } = getRelativeMousePosition(e, rect);
         return { x, y };
     }
@@ -84,7 +85,7 @@ const GestureScreen = observer(({ webviewRef, setHovered }: GestureScreenProps) 
      * @param e
      */
     function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
-        console.log(editorEngine.mode,"editorEngine")
+        console.log(editorEngine.mode, 'editorEngine');
         if (editorEngine.mode === EditorMode.DESIGN) {
             handleMouseEvent(e, MouseAction.CLICK);
         } else if (
@@ -157,7 +158,18 @@ const GestureScreen = observer(({ webviewRef, setHovered }: GestureScreenProps) 
             case MouseAction.CLICK:
                 // Not right-click
                 if (e.button !== 2) {
-                    console.log(el,"clickel")
+                    console.log(el, 'clickel');
+                    console.log(
+                        await webview.executeJavaScript(
+                            `window.api?.getElementAtLoc(${pos.x}, ${pos.y}, ${action === MouseAction.CLICK} )`,
+                        ),
+                        'clickMouseAction',
+                    );
+
+                    console.log(
+                        await webview.executeJavaScript('document.documentElement.outerHTML'),
+                        'clickMouseActionBody',
+                    );
                     editorEngine.elements.click([el], webview);
                     editorEngine.move.start(el, pos, webview);
                 }

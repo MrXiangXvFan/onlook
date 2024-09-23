@@ -75,6 +75,7 @@ function shouldIgnoreMutatedNode(node: HTMLElement): boolean {
 function listenForEditEvents() {
     const change = new CssStyleChange();
 
+    //监听样式修改指令
     ipcRenderer.on(WebviewChannels.UPDATE_STYLE, (_, data) => {
         const { selector, style, value } = data;
         change.updateStyle(selector, style, value);

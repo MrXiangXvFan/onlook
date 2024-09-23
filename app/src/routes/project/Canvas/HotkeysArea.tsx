@@ -13,9 +13,9 @@ interface HotkeysAreaProps {
 
 /**
  * 作用域键盘对于浏览器模拟视口的作用。
- * 比如 ctrl + = 
- * @param param0 
- * @returns 
+ * 比如 ctrl + =
+ * @param param0
+ * @returns
  */
 const HotkeysArea = ({ children, scale, setScale }: HotkeysAreaProps) => {
     const editorEngine = useEditorEngine();

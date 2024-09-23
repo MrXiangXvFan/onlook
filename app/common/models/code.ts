@@ -10,7 +10,7 @@ export interface CodeDiffRequest {
 }
 
 export interface CodeDiff {
-    original: string;
-    generated: string;
+    original: string; //旧的dom节点
+    generated: string; //新的dom节点
     path: string;
 }

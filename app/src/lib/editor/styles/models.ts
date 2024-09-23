@@ -13,11 +13,11 @@ export interface ElementStyle {
 }
 
 export enum ElementStyleType {
-    Text = 'text',
+    Text = 'text', //文本类型
     Dimensions = 'dimensions',
-    Number = 'number',
-    Select = 'select',
-    Color = 'color',
+    Number = 'number', //数字输入
+    Select = 'select', //下拉选择类型
+    Color = 'color', //颜色选择类型
 }
 
 export enum ElementStyleGroup {

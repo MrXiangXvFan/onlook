@@ -25,8 +25,8 @@ interface BrowserControlsProps {
 
 /**
  * 模拟的浏览器url输入栏
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 function BrowserControls({
     webviewRef,

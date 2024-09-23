@@ -45,7 +45,7 @@ const Canvas = observer(({ children }: { children: ReactNode }) => {
         const deltaX = (x - position.x) * zoomFactor;
         const deltaY = (y - position.y) * zoomFactor;
 
-        console.log(newScale,"newScalenewScale")
+        console.log(newScale, 'newScalenewScale');
         setScale(newScale);
         setPosition((prevPosition) => ({
             x: prevPosition.x - deltaX,
@@ -63,11 +63,11 @@ const Canvas = observer(({ children }: { children: ReactNode }) => {
     };
 
     const handleCanvasClicked = (event: React.MouseEvent<HTMLDivElement>) => {
-        console.log("点击11111222")
+        console.log('点击11111222');
         if (event.target !== containerRef.current) {
             return;
         }
-        console.log("点击11111")
+        console.log('点击11111');
         editorEngine.webviews.deselectAll();
         editorEngine.webviews.notify();
         editorEngine.clear();

@@ -4,10 +4,16 @@ import { TemplateNode } from '../models/element/templateNode';
 
 export function getTemplateNode(element: Element): TemplateNode | undefined {
     const encodedTemplateNode = element.getAttribute(EditorAttributes.DATA_ONLOOK_ID);
+    console.log(encodedTemplateNode, 'encodedTemplateNodeencodedTemplateNod2212');
+    console.log(element, 'encodedTemplateNodeencodedTemplateNodeelementelement3333');
     if (!encodedTemplateNode) {
         return;
     }
     const templateNode = decode(encodedTemplateNode);
+    console.log(
+        templateNode,
+        'encodedTemplateNodeencodedTemplateNodeelementelementtemplateNodetemplateNode',
+    );
     return templateNode;
 }
 
@@ -22,14 +28,23 @@ export function encode(templateNode: TemplateNode) {
 }
 
 export function decode(encodedTemplateNode: string): TemplateNode {
+    console.log(encodedTemplateNode, 'encodedTemplateNode!!!');
+    //编译成二进制数据
     const buffer = new Uint8Array(
         atob(encodedTemplateNode)
             .split('')
             .map((c) => c.charCodeAt(0)),
     );
+    console.log(buffer, 'bufferbuffer');
+    //解压二进制数据
     const decompressed = decompressSync(buffer);
+    console.log(decompressed, 'decompresseddecompressed');
+    //将二进制数据转换为字符串，
     const JsonString = strFromU8(decompressed);
+    console.log(JsonString, 'JsonStringJsonStringJsonString');
+    //解析为对象
     const templateNode = JSON.parse(JsonString) as TemplateNode;
+    console.log(templateNode, 'JSON.parse(JsonString)');
     return templateNode;
 }
 

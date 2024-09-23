@@ -1,8 +1,8 @@
 /**
  * 对字符串进行 数值和 单位的解析，并返回。 比如10px => [10, 'px']
- * @param val 
- * @param percent 
- * @returns 
+ * @param val
+ * @param percent
+ * @returns
  */
 export function stringToParsedValue(val: string, percent: boolean = false): [number, string] {
     const matches = val.match(/([-+]?[0-9]*\.?[0-9]+)([a-zA-Z%]*)/);
@@ -19,9 +19,9 @@ export function stringToParsedValue(val: string, percent: boolean = false): [num
 
 /**
  * 把字符串和单位重新进行拼接
- * @param floatValue 
- * @param unit 
- * @returns 
+ * @param floatValue
+ * @param unit
+ * @returns
  */
 export function parsedValueToString(floatValue: number | string, unit: string): string {
     return `${floatValue}${unit}`;

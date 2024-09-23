@@ -17,6 +17,7 @@ const LayersTab = observer(() => {
     const [domTree, setDomTree] = useState<LayerNode[]>([]);
     const [treeHovered, setTreeHovered] = useState(false);
 
+    //监听editorEngine.ast.layers重新渲染树结构
     useEffect(() => setDomTree(editorEngine.ast.layers), [editorEngine.ast.layers]);
     useEffect(handleSelectChange, [editorEngine.elements.selected]);
 
@@ -38,14 +39,12 @@ const LayersTab = observer(() => {
             onMouseOver={() => setTreeHovered(true)}
             onMouseLeave={() => handleMouseLeaveTree()}
         >
-            {
-                console.log(domTree,"domTreedomTree")
-            }
+            {console.log(domTree, 'domTreedomTree')}
             <RightClickMenu>
                 <Tree
                     ref={treeRef}
                     data={domTree}
-                    openByDefault={true} 
+                    openByDefault={true}
                     overscanCount={1}
                     indent={8}
                     padding={0}

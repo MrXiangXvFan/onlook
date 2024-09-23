@@ -25,7 +25,9 @@ export class StyleManager {
         );
     }
 
+    //表单组件改变后，更新元素的样式
     updateElementStyle(style: string, change: Change<string>) {
+        //目标元素（正在被改变的元素）
         const targets: Array<ActionTargetWithSelector> = this.elements.selected.map((s) => ({
             webviewId: s.webviewId,
             selector: s.selector,

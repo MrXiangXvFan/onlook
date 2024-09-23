@@ -35,6 +35,7 @@ export const RightClickMenu = observer(({ children }: RightClickMenuProps) => {
         },
     ];
 
+    //
     useEffect(() => {
         updateMenuItems();
     }, [editorEngine.elements.selected]);

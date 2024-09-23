@@ -49,7 +49,7 @@ const TextInput = observer(
 
         const sendStyleUpdate = (newValue: string) => {
             setLocalValue(newValue);
-            console.log(editorEngine,"editorEngineeditorEngine")
+            console.log(editorEngine, 'editorEngineeditorEngine');
             editorEngine.style.updateElementStyle(
                 elementStyle.key,
                 constructChange(appendCssUnit(newValue)),
@@ -76,9 +76,9 @@ const TextInput = observer(
             //监听上下按钮，进行数值的增减
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
-                console.log(localValue,"localValue")
+                console.log(localValue, 'localValue');
                 const [parsedNumber, parsedUnit] = stringToParsedValue(localValue);
-                console.log(parsedNumber,parsedUnit,"parsedUnitparsedUnit")
+                console.log(parsedNumber, parsedUnit, 'parsedUnitparsedUnit');
                 const newNumber = (parsedNumber + (e.key === 'ArrowUp' ? step : -step)).toString();
                 const newValue = parsedValueToString(newNumber, parsedUnit);
                 sendStyleUpdate(newValue);

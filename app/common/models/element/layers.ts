@@ -1,5 +1,5 @@
 export interface LayerNode {
-    id: string;
+    id: string; //唯一id
     textContent: string;
     type: number;
     tagName: string;

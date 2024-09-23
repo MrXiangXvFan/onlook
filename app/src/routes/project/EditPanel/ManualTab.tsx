@@ -61,6 +61,8 @@ const ManualTab = observer(() => {
     }
 
     function renderGroupStyles(groupedStyles: Record<string, Record<string, ElementStyle[]>>) {
+        console.log(groupedStyles, Object.entries(groupedStyles), 'groupedStylesgroupedStyles');
+        //这一层，渲染样式的几种类型，layout/styles/text
         return Object.entries(groupedStyles).map(([groupKey, subGroup]) => (
             <AccordionItem key={groupKey} value={groupKey}>
                 <AccordionTrigger>
@@ -70,10 +72,16 @@ const ManualTab = observer(() => {
                 <AccordionContent>
                     {/* 工具栏 输入区域  todo*/}
                     {groupKey === 'Text' && (
-                        <TagDetails tagName={editorEngine.elements.selected[0].tagName} />
+                        <>
+                            <TagDetails tagName={editorEngine.elements.selected[0].tagName} />
+                        </>
                     )}
+                    {console.log(subGroup, Object.entries(subGroup), 'subGroupsubGroup')}
+                    {/* //这一层，渲染每种类型下的几种属性 */}
+                    {/* 比如 styles 下的color，border等 */}
                     {Object.entries(subGroup).map(([subGroupKey, elementStyles]) => (
                         <div key={subGroupKey}>
+                            {console.log(elementStyles, 'elementStyles', subGroupKey)}
                             {getNestedInput(elementStyles, subGroupKey as ElementStyleSubGroup)}
                         </div>
                     ))}

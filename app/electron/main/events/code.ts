@@ -23,12 +23,14 @@ export function listenForCodeMessages() {
         return readCodeBlocks(templateNodes);
     });
 
+    //修改源文件 =》新代码覆盖旧的代码
     ipcMain.handle(MainChannels.WRITE_CODE_BLOCKS, async (e: Electron.IpcMainInvokeEvent, args) => {
         const codeResults = args as CodeDiff[];
         const res = await writeCode(codeResults);
         return res;
     });
 
+    //获取代码差异=》根据模板节点获取差异
     ipcMain.handle(MainChannels.GET_CODE_DIFFS, (e: Electron.IpcMainInvokeEvent, args) => {
         const requests = args as Map<TemplateNode, CodeDiffRequest>;
         return getCodeDiffs(requests);

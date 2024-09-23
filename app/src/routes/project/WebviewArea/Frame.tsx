@@ -121,7 +121,7 @@ const Frame = observer(
         }
 
         function handleWebviewFocus() {
-            console.log("点击了")
+            console.log('点击了');
             setFocused(true);
         }
 

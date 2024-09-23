@@ -24,7 +24,7 @@ const LayersPanel = observer(() => {
     function renderTabs() {
         return (
             <Tabs defaultValue={selectedTab}>
-            {/* 树级结构的导航栏 "layers" or "Components" 这个 */}
+                {/* 树级结构的导航栏 "layers" or "Components" 这个 */}
                 <TabsList className="bg-transparent w-full gap-4 select-none justify-start pr-2 pl-4 pt-2">
                     <TabsTrigger
                         className="bg-transparent p-0 text-xs hover:text-text-hover"

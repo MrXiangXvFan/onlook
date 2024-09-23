@@ -13,6 +13,7 @@ export async function readFile(filePath: string): Promise<string> {
     }
 }
 
+//写入新的代码（修改后的）
 export async function writeFile(filePath: string, content: string): Promise<void> {
     try {
         const fullPath = path.resolve(filePath);

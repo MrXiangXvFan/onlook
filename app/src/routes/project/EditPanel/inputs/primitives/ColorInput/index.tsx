@@ -29,8 +29,14 @@ const ColorInput = observer(
             return inputString === 'initial' || inputString === '';
         }
 
+        /**
+         * 颜色改变
+         * @param newValue  新的颜色色值
+         */
         function sendStyleUpdate(newValue: string) {
             setInputString(newValue);
+            console.log(constructChange, 'constructChange');
+            console.log(elementStyle.key, 'elementStyle.keyelementStyle.key');
             editorEngine.style.updateElementStyle(elementStyle.key, constructChange(newValue));
             onValueChange && onValueChange(elementStyle.key, newValue);
         }

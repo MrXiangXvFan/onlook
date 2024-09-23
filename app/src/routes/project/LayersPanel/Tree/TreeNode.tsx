@@ -61,6 +61,7 @@ const TreeNode = observer(
             }
         }, [editorEngine.elements.selected]);
 
+        //鼠标放到树结构的节点上webView显示该节点的框框
         function handleHoverNode() {
             if (hovered) {
                 return;
@@ -80,6 +81,7 @@ const TreeNode = observer(
             return containerWidth - nodeRightEdge + 10;
         }
 
+        //鼠标点击树结构的节点，选中该节点--在webview中显示节点信息
         function handleSelectNode() {
             if (selected) {
                 return;

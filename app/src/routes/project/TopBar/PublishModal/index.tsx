@@ -26,13 +26,13 @@ const PublishModal = observer(() => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoadingCodeDiff, setIsLoadingCodeDiff] = useState(false);
     const [isWriting, setIsWriting] = useState(false);
-    const [codeDiffs, setCodeDiffs] = useState<CodeDiff[]>([]);
+    const [codeDiffs, setCodeDiffs] = useState<CodeDiff[]>([]); //新旧节点信息
 
     async function handleOpenChange(open: boolean) {
         setIsOpen(open);
         if (open) {
             setIsLoadingCodeDiff(true);
-            const res = await editorEngine.code.generateCodeDiffs();
+            const res: CodeDiff[] = await editorEngine.code.generateCodeDiffs();
             setIsLoadingCodeDiff(false);
             setCodeDiffs(res);
         }
@@ -74,6 +74,7 @@ const PublishModal = observer(() => {
         });
     }
 
+    //提交修改后的代码，并更改源文件
     async function writeCodeBlock() {
         setIsWriting(true);
         const res = await window.api.invoke(MainChannels.WRITE_CODE_BLOCKS, codeDiffs);
@@ -124,6 +125,8 @@ const PublishModal = observer(() => {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex flex-col space-y-6 max-h-96 overflow-auto">
+                    {/* //这里，就是进行 新旧 代码比对的地方 */}
+                    {console.log(codeDiffs, 'codeDiffs')}
                     {codeDiffs.map((item, index) => (
                         <div key={index} className="flex flex-col space-y-2">
                             <Button

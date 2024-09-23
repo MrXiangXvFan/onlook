@@ -74,6 +74,8 @@ impl VisitMut for TransformVisitor {
             }))),
         });
 
+        println!("data_attributedata_attribute!", data_attribute);  
+
         el.opening.attrs.push(data_attribute);
         el.visit_mut_children_with(self);
     }

@@ -12,12 +12,12 @@ import { WebviewChannels } from '/common/constants';
 
 export class ActionManager {
     constructor(
-        private history: HistoryManager,
+        private history: HistoryManager, //历史操作记录
         private webviews: WebviewManager,
     ) {}
 
     run(action: Action) {
-        this.history.push(action);
+        this.history.push(action); //往历史操作记录里追加操作（用于前进、回退）
         this.dispatch(action);
     }
 
@@ -43,6 +43,7 @@ export class ActionManager {
 
     private dispatch(action: Action) {
         switch (action.type) {
+            //更改样式
             case 'update-style':
                 this.updateStyle(action.targets, action.style, action.change.updated);
                 break;
@@ -60,12 +61,20 @@ export class ActionManager {
         }
     }
 
+    /**
+     * 更改样式
+     * @param targets  目标组件集
+     * @param style 被修改的样式类型：例如：color“”
+     * @param value 修改后的值：例如：#ff0000
+     */
     private updateStyle(targets: Array<ActionTargetWithSelector>, style: string, value: string) {
+        console.log(targets, 'targets', style, 'style', value, 'value', 'updateStyleupdateStyle');
         targets.forEach((elementMetadata) => {
             const webview = this.webviews.getWebview(elementMetadata.webviewId);
             if (!webview) {
                 return;
             }
+            //发送修改指令
             webview.send(WebviewChannels.UPDATE_STYLE, {
                 selector: elementMetadata.selector,
                 style,

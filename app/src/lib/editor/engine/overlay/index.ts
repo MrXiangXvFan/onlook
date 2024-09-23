@@ -2,7 +2,7 @@ import { ClickRect, HoverRect, InsertRect, ParentRect } from './rect';
 import { querySelectorCommand } from '/common/helpers';
 
 export class OverlayManager {
-    overlayContainer: HTMLElement | undefined; //这个是 ，webview在被点击的时候，出现元素信息的框
+    overlayContainer: HTMLElement | undefined; //这个是 ，webview在被点击的时候，出现元素信息的框（el的ref 的current）
     hoverRect: HoverRect;
     insertRect: InsertRect;
     clickedRects: ClickRect[];
@@ -17,6 +17,7 @@ export class OverlayManager {
         this.bindMethods();
     }
 
+    //初始化把元素信息框ref映射到当前类中
     setOverlayContainer = (container: HTMLElement) => {
         this.overlayContainer = container;
         this.appendRectToPopover(this.hoverRect.element);

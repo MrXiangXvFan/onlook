@@ -94,7 +94,9 @@ const BorderInput = observer(({ elementStyles }: { elementStyles: ElementStyle[]
                         ) : elementStyle.type === ElementStyleType.Number ? (
                             <NumberUnitInput elementStyle={elementStyle} />
                         ) : (
+                            // <>222</>
                             <TextInput elementStyle={elementStyle} />
+                            // <>2222</>
                         )}
                     </div>
                 </motion.div>

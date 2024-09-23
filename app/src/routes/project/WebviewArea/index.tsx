@@ -5,7 +5,7 @@ import Overlay from './Overlay';
 
 /**
  * 中间的webview的区域 （整个）
- * @returns 
+ * @returns
  */
 function WebviewArea() {
     //获取到公共状态，用户接受工具栏change的数值

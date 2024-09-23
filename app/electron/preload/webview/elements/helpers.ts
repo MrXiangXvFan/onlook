@@ -54,6 +54,8 @@ export const getDomElement = (el: HTMLElement, getStyle: boolean): DomElement =>
     return JSON.parse(JSON.stringify(domElement));
 };
 
+// 检测 data-onlook-unique-id 属性，没有加一个uuid
+// data-onlook-unique-id含义未知
 export function assignUniqueId(el: HTMLElement) {
     if (el.getAttribute(EditorAttributes.DATA_ONLOOK_UNIQUE_ID) === null) {
         el.setAttribute(EditorAttributes.DATA_ONLOOK_UNIQUE_ID, uuid());

@@ -13,7 +13,7 @@ const IGNORE_TAGS = ['SCRIPT', 'STYLE'];
  */
 export class AstManager {
     private doc: Document | undefined;
-    private layersMap: Map<string, LayerNode> = new Map();
+    private layersMap: Map<string, LayerNode> = new Map(); //data-onlook-unique-id : {}
     layers: LayerNode[] = [];
     templateNodeMap: AstMap = new AstMap();
 
@@ -65,7 +65,7 @@ export class AstManager {
     }
 
     getInstanceSync(selector: string): TemplateNode | undefined {
-        console.log('getInstanceSync', selector);
+        // console.log('getInstanceSync', selector);
         return this.templateNodeMap.getInstance(selector);
     }
 
@@ -75,25 +75,38 @@ export class AstManager {
         return this.templateNodeMap.getInstance(selector);
     }
 
+    //获取当前选中的节点
     async getRoot(selector: string): Promise<TemplateNode | undefined> {
-        console.log('getRoot',selector);
+        console.log('getRoot', selector);
         await this.checkForNode(selector);
         return this.templateNodeMap.getRoot(selector);
     }
 
+    /**
+     * 检查节点是否需要更新（因为如果选中的节点已经在左侧的树结构里了，就不需要更新）
+     * @param selector 节点id
+     * @returns
+     */
     async checkForNode(selector: string) {
         console.log('节点更新的时候触发');
-        console.log(this.templateNodeMap, 'templateNodeMaptemplateNodeMap');
+        console.log(this.templateNodeMap, 'templateNodeMaptemplateNodeap');
+        //如果左侧节点树里面是否已经存在当前节点信息
         if (this.templateNodeMap.isProcessed(selector)) {
             return;
         }
+        console.log(selector, 'selectorselector');
+        //获取到当前dom节点
         const element = this.doc?.querySelector(selector);
+        console.log(element, 'elementelement111');
+        //获取新的节点信息  refreshed字段用于判读是否需要更新
         const res = await this.processNode(element as HTMLElement);
+        console.log(res, res.layerNode, res.refreshed, 'res && res.layerNode && res.refreshed');
         if (res && res.layerNode && res.refreshed) {
             this.updateLayers([res.layerNode]);
         }
     }
 
+    //将整个webveiw的document文档挂载到AstManager的doc属性中
     setDoc(doc: Document) {
         this.doc = doc;
     }
@@ -106,10 +119,12 @@ export class AstManager {
     async setMapRoot(rootElement: Element) {
         console.log('设置节点');
         this.clear();
+        console.log(rootElement.ownerDocument, 'rootElement.ownerDocument');
+        //初始化设置整个webview的doc文档
         this.setDoc(rootElement.ownerDocument);
         const res = await this.processNode(rootElement as HTMLElement);
         if (res && res.layerNode) {
-            console.log('有layerNode吗');
+            console.log(res, '有layerNode吗');
             this.updateLayers([res.layerNode]);
         }
     }
@@ -125,6 +140,7 @@ export class AstManager {
     }
 
     private async processNodeForMap(node: HTMLElement) {
+        console.log(node, 'nodenodenode');
         const selector = getUniqueSelector(node, this.doc?.body);
         if (!selector) {
             return;
@@ -184,6 +200,7 @@ export class AstManager {
         refreshed: boolean;
     } | null> {
         return new Promise((resolve) => {
+            console.log(element, 'processNode');
             this.parseElToLayerNodeRecursive(element, null, false, resolve);
         });
     }
@@ -194,6 +211,9 @@ export class AstManager {
         refreshed: boolean,
         finalResolve: (result: { layerNode: LayerNode | null; refreshed: boolean } | null) => void,
     ) {
+        console.log('element.ownerDocument.body', element);
+
+        //根据屏幕刷新的分辨率触发
         requestAnimationFrame(async () => {
             if (!this.isValidElement(element)) {
                 finalResolve(null);
@@ -204,9 +224,13 @@ export class AstManager {
                 this.processNodeForMap(element);
             }
 
+            console.log(this.layersMap, 'this.layersMap');
             let currentNode = this.layersMap.get(selector);
+            console.log(currentNode, 'currentNodecurrentNode');
+            //判断当前的树结构上是否存在 selector 这个节点。
             if (!currentNode) {
                 currentNode = this.getLayerNodeFromElement(element, selector);
+                //如果没有这个节点，则往节点树中追加一个
                 this.layersMap.set(selector, currentNode);
                 refreshed = true;
             }
@@ -232,6 +256,10 @@ export class AstManager {
             }
 
             if (element.parentElement && element.tagName.toLowerCase() !== 'body') {
+                console.log(
+                    { layerNode: currentNode, refreshed },
+                    '{ layerNode: currentNode, refreshed }',
+                );
                 this.parseElToLayerNodeRecursive(
                     element.parentElement,
                     currentNode,

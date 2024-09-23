@@ -23,6 +23,7 @@ async function groupRequestsByTemplatePath(
 ): Promise<Map<string, RequestsByPath>> {
     const groupedRequests: Map<string, RequestsByPath> = new Map();
 
+    console.log(templateToCodeDiff, 'templateToCodeDifftemplateToCodeDiff');
     for (const [templateNode, request] of templateToCodeDiff) {
         const codeBlock = await readFile(templateNode.path);
         const path = templateNode.path;
